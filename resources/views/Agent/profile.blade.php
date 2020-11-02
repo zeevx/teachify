@@ -133,6 +133,13 @@
                                 </form>
                             </div>
                             <hr class="my-4" />
+                            <h6 class="heading-small text-muted mb-4">Teachers</h6>
+                            <div class="pl-lg-4">
+                            @foreach($teachers as $teacher)
+                                <p>{{ $teacher->name  }}</p>
+                                @endforeach
+                            </div>
+                            <hr class="my-4" />
                                 <!-- Description -->
                                 <h6 class="heading-small text-muted mb-4">Change Password</h6>
                                 <div class="pl-lg-4">

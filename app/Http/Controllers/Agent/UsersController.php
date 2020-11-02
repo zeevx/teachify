@@ -98,10 +98,6 @@ class UsersController extends Controller
             $user->verified = 'true';
         }
         if($user->save()){
-            $data = array('name'=>$request->name,
-                'email' => $request->email,
-                'pass' => $password
-            );
 
             DB::table('role_user')->insert([
                 'role_id' => $request->id,
@@ -151,7 +147,9 @@ class UsersController extends Controller
                 ]);
             }
             $data = array(
-                'name' => $user->name
+                'name' => $user->name,
+                'email' => $user->email,
+                'pass' => $password
             );
             Mail::send('Mail.register-2', $data, function($message) use ($request) {
                 $message->to(env('MAIL_FROM_ADDRESS'), 'New Account Created')->subject

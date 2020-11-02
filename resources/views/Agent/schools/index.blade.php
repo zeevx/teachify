@@ -62,8 +62,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button class="btn-sm btn-outline-primary"> Edit/View </button>
-                                        <button class="btn-sm btn-outline-danger"> Delete </button>
+                                        <button class="btn-sm btn-outline-primary" onclick="window.location = '{{ url('aprofile', $user->id) }}';"> View </button>
                                     </td>
                                 </tr>
                             @empty

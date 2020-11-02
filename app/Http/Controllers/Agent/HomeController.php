@@ -98,10 +98,15 @@ class HomeController extends Controller
         $user = User::find($id);
         $fieldagent = DB::table('agent_user')
             ->where('user_id','=', $user->id)->first();
-//        dd($fieldagent);
+        $my2 = DB::table('teacher_user')
+            ->where('school_id', '=', $id)->get('user_id');
+        $data2 = json_decode($my2, true);
+        $teachers = User::whereIn('id', $data2)
+            ->get();
         return view('Agent.profile', [
             'user' => $user,
-            'fieldagent' => $fieldagent
+            'fieldagent' => $fieldagent,
+            'teachers' => $teachers
         ]);
     }
 
