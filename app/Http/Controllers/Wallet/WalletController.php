@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Wallet;
 use App\Http\Controllers\Controller;
 use App\Models\Wallet;
 use App\Classes\Wallet as WalletClass;
+use App\Models\WalletTransaction;
 use Illuminate\Http\Request;
 
 class WalletController extends Controller
@@ -13,7 +14,9 @@ class WalletController extends Controller
 
         $user = auth()->user();
         $wallet = $user->wallet;
-        return view('Teacher.wallet' , compact('user','wallet'));
+        $transactions = WalletTransaction::where('user_id',$user->id)->orderby('created_at','desc')->take(5)->get();
+
+        return view('Teacher.wallet' , compact('user','wallet', 'transactions'));
     }
 
     public function walletTransfer(){
@@ -36,36 +39,49 @@ class WalletController extends Controller
 
         $beneficiary = Wallet::with('owner')->where('account_number',$request['account_number'])->first();
 
-        if($user->wallet['account_number'] != $request['account_number'] ){
 
-            if($request['amount'] > 1){
+        /***
+         * Ensure the user wont is not trying fund is own wallet through wallet to wallet transfer method
+         *
+         * Ensure the beneficiary account number exists;
+         *
+         * Ensure the use is not trying to pay an amount that is below 1 Naita
+         *
+         */
 
-                $debit =  WalletClass::debit($user,$beneficiary, $request['amount'],$info ='');
+        if($user->wallet['account_number'] != $request['account_number'] ) {
+
+            if ($beneficiary) {
+                if ($request['amount'] > 1) {
+
+                    $debit = WalletClass::debit($user, $beneficiary, $request['amount'], $info = '');
 
 
-                if ($debit['success']) {
+                    if ($debit['success']) {
 
-                    $credit  =  WalletClass::credit($beneficiary, $user, $request['amount'] , $info='');
-                    return back()->with('success','Wallet transfer to '.$beneficiary->owner['name'].'was successful');
+                        $credit = WalletClass::credit($beneficiary, $user, $request['amount'], $info = '');
+                        return back()->with('success', 'Wallet transfer to ' . $beneficiary->owner['name'] . ' was successful');
 
+                    }
+
+                    if (!$debit['success']) {
+
+                        return back()->with('failure', 'Insufficient Balance');
+                    }
+
+                } else {
+
+                    return back()->with('failure', 'You cant transfer a value that is below 1 Naira');
                 }
-
-                if(!$debit['success']){
-
-                   return back()->with('success','Insufficient Balance');
-                }
-
 
             }else{
-
-                return back()->with('success', 'You cant transfer a value that is below 1 Naira');
+                return back()->with('failure','The beneficiary does not exist');
             }
+            } else {
 
-        }else{
+                return back()->with('failure', 'You cant fund your own wallet with wallet to wallet transfer, use top up');
 
-            return back()->with('success', 'You cant fund your own wallet with wallet to wallet transfer, use top up');
-
-        }
+            }
 
 
     }

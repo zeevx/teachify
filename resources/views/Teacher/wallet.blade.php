@@ -46,23 +46,27 @@
                     @include('partials.alerts')
                     <thead>
                     <tr>
-                        <th>Transaction</th>
-                        <th>Status</th>
-                        <th>Option</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                        <th>Date</th>
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($transactions as $transaction)
                         <tr>
-                           No data available
+                            <th>&#8358; {{number_format($transaction->amount)}}</th>
+                            <th>{{$transaction->type}}</th>
+                            <th>{{$transaction->created_at->format('Y-m-d')}}</th>
                         </tr>
+                    @endforeach
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Options</th>
-                    </tr>
-                    </tfoot>
+{{--                    <tfoot>--}}
+{{--                    <tr>--}}
+{{--                        <th>Amount</th>--}}
+{{--                        <th>Type</th>--}}
+{{--                        <th>Date</th>--}}
+{{--                    </tr>--}}
+{{--                    </tfoot>--}}
                 </table>
             </div>
         </div>

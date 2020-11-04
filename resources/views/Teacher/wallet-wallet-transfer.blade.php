@@ -131,13 +131,13 @@
         <div class="modal-dialog">
 
                 <div class="modal-content">
-                    <h5 style="margin:14px;">Account Details</h5>
+                    <h5 style="margin:14px;color:#ea7832;" >Account Details</h5>
 {{--                    <input type="hidden" id="staff_id" name="staff_id" value="">--}}
                     <div class="modal-body">
 
-                            <span>Account Name</span> :<span id="verify_account_name"> </span>
+                            <span style="color:#ea7832;">Account Name</span> : <span style="color:#ea7832;" id="verify_account_name"> </span>
                             <br>
-                            <span>Account Number</span> : <span id="verify_account_number"> </span>
+                            <span style="color:#ea7832;">Account Number</span> :  <span style="color:#ea7832;" id="verify_account_number"> </span>
 
                     </div>
                     <br>
@@ -164,9 +164,6 @@
             $.ajax({
                 url: '/wallet/verify/accountnumber/' + accountVerification,
                 type: "GET",
-                // data: {
-                //     accountVerification: accountVerification,
-                // },
                 dataType: 'json',
                 success: function (data) {
                     displayAccountDetails(data);
@@ -176,7 +173,6 @@
         });
 
         $("#input-account_number").keyup( function() {
-            console.log('fhfh');
            if( $("#input-account_number").val() < 11){
                $("#verify_account_name").val('');
                $("#verify_account_number").val('');
@@ -187,8 +183,8 @@
             let accountName = document.getElementById("verify_account_name");
             let accountNumber = document.getElementById("verify_account_number");
 
-            accountName.innerHTML = data.data.owner.name;
-            accountNumber.innerHTML = data.data.account_number;
+                accountName.innerHTML = data.data.owner.name;
+                accountNumber.innerHTML = data.data.account_number;
 
         }
     });
