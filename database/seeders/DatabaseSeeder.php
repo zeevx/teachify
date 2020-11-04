@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(WalletSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(RoleUserSeeder::class);
         // \App\Models\User::factory(10)->create();
     }
 }

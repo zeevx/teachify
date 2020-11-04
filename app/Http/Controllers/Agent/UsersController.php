@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Agent;
 
+use App\Classes\Wallet;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
@@ -98,7 +99,10 @@ class UsersController extends Controller
             $user->verified = 'true';
         }
         if($user->save()){
-
+            $wallet =   $user->wallet()->create([
+                'account_number' => Wallet::generateAccountNumber(),
+                'balance' => 0.0
+            ]);
             DB::table('role_user')->insert([
                 'role_id' => $request->id,
                 'user_id' => $user->id,
@@ -147,9 +151,10 @@ class UsersController extends Controller
                 ]);
             }
             $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'pass' => $password
+                'name'=>$request->name,
+                'email' => $request->email,
+                'pass' => $password,
+                'wallet' => $wallet->account_number,
             );
             Mail::send('Mail.register-2', $data, function($message) use ($request) {
                 $message->to(env('MAIL_FROM_ADDRESS'), 'New Account Created')->subject

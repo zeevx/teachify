@@ -56,9 +56,9 @@
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
         <!-- Brand -->
-        <div class="sidenav-header  align-items-center">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                Teachify NG
+        <div class="sidenav-header align-items-center">
+            <a class="" href="{{ route('home') }}">
+                <img src="{{ url('teachify.png') }}" style="max-height: 5em;">
             </a>
         </div>
         <div class="navbar-inner">
@@ -80,7 +80,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{url('/wallet/index')}}">
-                            <i class="ni ni-settings-gear-65 text-dark"></i>
+                            <i class="ni ni-money-coins text-dark"></i>
                             <span class="nav-link-text">Wallet</span>
                         </a>
                     </li>

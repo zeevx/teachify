@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Classes\Wallet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -45,6 +46,11 @@ class UsersImport implements ToCollection
             ]);
             $user->verified = "true";
             if($user->save()){
+                $wallet =   $user->wallet()->create([
+                    'account_number' => Wallet::generateAccountNumber(),
+                    'balance' => 0.0
+                ]);
+
                 DB::table('role_user')->insert([
                     'role_id' => $this->id,
                     'user_id' => $user->id,
@@ -84,7 +90,8 @@ class UsersImport implements ToCollection
                 $data = array(
                     'name' => $user->name,
                     'email' => $user->email,
-                    'pass' => $password
+                    'pass' => $password,
+                    'wallet' => $wallet->account_number,
                 );
                 Mail::send('Mail.new', $data, function($message) use ($user) {
                     $message->to($user->email, 'New Account Created')->subject

@@ -24,12 +24,21 @@
     <div class="container-fluid mt--6">
 
         <div class="row">
-            <div class="card walletcard">
-                <div class="card-header wallet-text">Account Number : {{$wallet->account_number}}</div>
-                <div class="card-body wallet-text">Account Status : {{$wallet->status}}</div>
-                <div class="card-footer wallet-text">Balance: &#8358;{{number_format($wallet->balance)}}</div>
-            </div>
+{{--            <div class="card walletcard">--}}
+{{--                <div class="card-header wallet-text">Account Number : {{$wallet->account_number}}</div>--}}
+{{--                <div class="card-body wallet-text">Account Status : {{$wallet->status}}</div>--}}
+{{--                <div class="card-footer wallet-text">Balance: &#8358;{{number_format($wallet->balance)}}</div>--}}
+{{--            </div>--}}
             <div class="pt-100 container-fluid table-responsive">
+                <div style="font-size: 20px; margin-bottom: 50px">
+                    <div class="float-left">
+                        <b>Account Number: </b> {{$wallet->account_number}} ({{$wallet->status}})
+                    </div>
+                    <div class="float-right">
+                        <b>Balance: </b> &#8358;{{number_format($wallet->balance)}}
+                    </div>
+                </div>
+                <br>
                 <div style="display:flex; justify-content: space-between;">
                     <div>
                         <h2>Recent Transactions</h2>
@@ -60,13 +69,6 @@
                         </tr>
                     @endforeach
                     </tbody>
-{{--                    <tfoot>--}}
-{{--                    <tr>--}}
-{{--                        <th>Amount</th>--}}
-{{--                        <th>Type</th>--}}
-{{--                        <th>Date</th>--}}
-{{--                    </tr>--}}
-{{--                    </tfoot>--}}
                 </table>
             </div>
         </div>

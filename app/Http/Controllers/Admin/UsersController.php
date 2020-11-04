@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\Wallet;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
@@ -86,6 +87,8 @@ class UsersController extends Controller
 
         // shuffle the result
         $password = str_shuffle($pin);
+
+
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -93,10 +96,11 @@ class UsersController extends Controller
         ]);
         $user->verified = 'true';
         if($user->save()){
-            $data = array('name'=>$request->name,
-                'email' => $request->email,
-                'pass' => $password
-            );
+            $wallet =   $user->wallet()->create([
+                'account_number' => Wallet::generateAccountNumber(),
+                'balance' => 0.0
+            ]);
+
             DB::table('role_user')->insert([
                 'role_id' => $request->id,
                 'user_id' => $user->id,
@@ -154,9 +158,10 @@ class UsersController extends Controller
                 ]);
             }
             $data = array(
-                'name' => $user->name,
-                'email' => $user->email,
-                'pass' => $password
+                'name'=>$request->name,
+                'email' => $request->email,
+                'pass' => $password,
+                'wallet' => $wallet->account_number,
             );
             Mail::send('Mail.new', $data, function($message) use ($request) {
                 $message->to($request->email, 'New Account Created')->subject
