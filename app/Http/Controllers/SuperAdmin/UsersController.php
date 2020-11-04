@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Classes\Wallet;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
@@ -69,7 +70,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -83,18 +84,33 @@ class UsersController extends Controller
                     . $characters[rand(0, strlen($characters) - 1)];
 
         // shuffle the result
-                $password = str_shuffle($pin);
+        $password = str_shuffle($pin);
+
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($password)
         ]);
+
         $user->verified = 'true';
-        if($user->save()){
-            $data = array('name'=>$request->name,
+        $user->save();
+
+        if($user){
+
+       $wallet =   $user->wallet()->create([
+                'account_number' => Wallet::generateAccountNumber(),
+                'balance' => 0.0
+            ]);
+
+
+            $data = array(
+                'name'=>$request->name,
                 'email' => $request->email,
-                'pass' => $password
+                'pass' => $password,
+                'wallet' => $wallet->account_number,
             );
+
+
             DB::table('role_user')->insert([
                 'role_id' => $request->id,
                 'user_id' => $user->id,
@@ -123,7 +139,7 @@ class UsersController extends Controller
             if($request->id == '5'){
                 DB::table('school_user')->insert([
                     'user_id' => $user->id,
-                    'agent_id' => $user->agent_id,
+                    'agent_id' => $request->agent_id,
                     'fieldagent_id' => $request->fieldagent_id,
                     'phone' => $request->phone,
                     'bank' => $request->bank,
@@ -135,6 +151,7 @@ class UsersController extends Controller
                 ]);
             }
             if($request->id == '6'){
+
                 DB::table('teacher_user')->insert([
                     'user_id' => $user->id,
                     'school_id' => $request->school_id,

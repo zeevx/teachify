@@ -16,10 +16,38 @@
     <!--- Datatable --->
     <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' type='text/javascript'></script>
+
+
+
     <style>
         .bg-primary{
             background-color: #ea7832 !important;
         }
+
+        .wallet-text{
+            color:#fff;
+            margin: 0;
+            padding: 5;
+            font-family: "Courier New" , Courier , monospace;
+            background: linear-gradient(40deg ,	#323858 70% , #fff 100%);
+            /*#ea7832*/
+        }
+        .transfer i {
+
+            position: absolute;
+            right: 1.6rem;
+            top: 3rem;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+
+
+
     </style>
 </head>
 
@@ -48,6 +76,12 @@
                         <a class="nav-link" href="{{ url('messages') }}">
                             <i class="ni ni-chat-round text-danger"></i>
                             <span class="nav-link-text">Complaints</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('/wallet/index')}}">
+                            <i class="ni ni-settings-gear-65 text-dark"></i>
+                            <span class="nav-link-text">Wallet</span>
                         </a>
                     </li>
                     <li class="nav-item">
