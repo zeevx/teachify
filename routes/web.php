@@ -33,6 +33,7 @@ Route::post('/verify', [App\Http\Controllers\HomeController::class, 'verify'])->
 Route::get('/profile/{id}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile')->middleware('can:superadmin');
 Route::post('/profile/submit', [App\Http\Controllers\HomeController::class, 'submit_profile'])->name('submit.profile')->middleware('can:superadmin');
 Route::post('/users/import', function (Request $request) {
+
     $agent_id = $request->agent_id;
     $fieldagent_id = $request->fieldagent_id;
     $school_id = $request->school_id;
@@ -47,6 +48,7 @@ Route::post('/users/import', function (Request $request) {
     return back();
 });
 Route::group(['prefix' => 'messages'], function () {
+
     Route::get('/', ['as' => 'messages', 'uses' => 'App\Http\Controllers\MessagesController@index']);
     Route::get('create', ['as' => 'messages.create', 'uses' => 'App\Http\Controllers\MessagesController@create']);
     Route::post('/', ['as' => 'messages.store', 'uses' => 'App\Http\Controllers\MessagesController@store']);
@@ -174,5 +176,12 @@ Route::namespace('App\Http\Controllers\School')->prefix('school')->name('school.
 Route::get('/sprofile/{id}', [App\Http\Controllers\School\HomeController::class, 'profile'])->name('sprofile')->middleware('can:school');
 Route::post('/sprofile/submit', [App\Http\Controllers\School\HomeController::class, 'submit_profile_info'])->name('submit.sprofile')->middleware('can:school');
 
+//wallet
+Route::namespace('App\Http\Controllers\Wallet')->prefix('wallet')->name('wallet.')->middleware('can:teacher')->group(function (){
 
+    Route::get('/index','WalletController@index')->name('wallet');
+    Route::get('/transfer','WalletController@walletTransfer')->name('transfer');
+    Route::get('/verify/accountnumber/{acountnumber}','WalletController@verifyAccountNumber')->name('verify.account');
+    Route::post('/transfer','WalletController@transfer')->name('transfer');
+});
 

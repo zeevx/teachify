@@ -33,6 +33,7 @@ class HomeController extends Controller
 //        })->get();
 
         $id = Auth::user()->id;
+
         $my = DB::table('school_user')
             ->where('agent_id', '=', $id)->get('user_id');
         $data = json_decode($my, true);

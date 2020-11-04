@@ -22,6 +22,7 @@ class HomeController extends Controller
     }
 
     public function profile($id){
+
         $user = User::find($id);
         if($user->hasRole("fieldagent")){
             $userinfo = DB::table('fieldagent_user')->where('user_id', '=', $id)->first();
@@ -44,13 +45,17 @@ class HomeController extends Controller
         ]);
     }
     public function submit_profile(Request $request){
+
         $user = User::find($request->id);
         if (empty($request->name) && !empty($request->role)){
+
             DB::table('role_user')
                 ->where('user_id', $user->id)
                 ->update(['role_id' => $request->role]);
+
         }
         elseif(empty($request->role) && $user->hasRole("fieldagent") && empty($request->agent)){
+
             DB::table('fieldagent_user')
                 ->where('user_id', $user->id)
                 ->update([
@@ -61,6 +66,7 @@ class HomeController extends Controller
                 ]);
         }
         elseif(empty($request->role) && $user->hasRole("agent")){
+
             DB::table('agent_user')
                 ->where('user_id', $user->id)
                 ->update([

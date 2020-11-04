@@ -60,4 +60,10 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function wallet(){
+
+        return $this->hasOne(Wallet::class);
+
+    }
 }
