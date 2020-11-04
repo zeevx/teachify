@@ -83,7 +83,7 @@
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="input-amount">Amount</label>
-                                                    <input type="text" id="input-amount" class="form-control" placeholder="Amount" name="amount" required>
+                                                    <input type="number" step="0.01" id="input-amount" class="form-control" placeholder="Amount" name="amount" required>
                                                 </div>
                                                 <div class="text-danger">{{$errors->first('amount')}}</div>
                                                 <br>
