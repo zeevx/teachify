@@ -52,6 +52,7 @@ class WalletController extends Controller
         if($user->wallet['account_number'] != $request['account_number'] ) {
 
             if ($beneficiary) {
+
                 if ($request['amount'] > 1) {
 
                     $debit = WalletClass::debit($user, $beneficiary, $request['amount'], $info = '');
@@ -60,6 +61,7 @@ class WalletController extends Controller
                     if ($debit['success']) {
 
                         $credit = WalletClass::credit($beneficiary, $user, $request['amount'], $info = '');
+
                         return back()->with('success', 'Wallet transfer to ' . $beneficiary->owner['name'] . ' was successful');
 
                     }
@@ -89,7 +91,7 @@ class WalletController extends Controller
     public function verifyAccountNumber($accountNumber){
 
         $verifyAccount = Wallet::with('owner')->where('account_number',$accountNumber)->first();
-//dd($verifyAccount);
+
         return response()->json([
             'data' => $verifyAccount
         ]);

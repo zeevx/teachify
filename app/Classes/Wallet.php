@@ -135,8 +135,9 @@ class Wallet
                 ];
             }
 
-            // validate wallet balance / commission
+            // validate wallet balance
             // Check if wallet is active
+
                 if ($amount > $wallet->balance) {
                     if ( !$allow_negative) {
                         return [

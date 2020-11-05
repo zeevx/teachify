@@ -110,36 +110,16 @@
         </footer>
     </div>
 
-{{--    <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"--}}
-{{--         aria-hidden="true">--}}
-{{--        <div class="modal-dialog" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                        <span aria-hidden="true">&times;</span>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body" id="mediumBody">--}}
-{{--                    <div>--}}
-{{--                        <!-- the result to be displayed apply here -->--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
     <div class="modal fade" id="verify_account">
         <div class="modal-dialog">
 
                 <div class="modal-content">
                     <h5 style="margin:14px;color:#ea7832;" >Account Details</h5>
-{{--                    <input type="hidden" id="staff_id" name="staff_id" value="">--}}
-                    <div class="modal-body">
-
+                        <div class="modal-body">
                             <span style="color:#ea7832;">Account Name</span> : <span style="color:#ea7832;" id="verify_account_name"> </span>
                             <br>
                             <span style="color:#ea7832;">Account Number</span> :  <span style="color:#ea7832;" id="verify_account_number"> </span>
-
-                    </div>
+                        </div>
                     <br>
                 </div>
 

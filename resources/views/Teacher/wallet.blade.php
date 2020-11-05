@@ -48,15 +48,17 @@
                     <tr>
                         <th>Amount</th>
                         <th>Type</th>
+                        <th>Info</th>
                         <th>Date</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($transactions as $transaction)
                         <tr>
-                            <th>&#8358; {{number_format($transaction->amount)}}</th>
-                            <th>{{$transaction->type}}</th>
-                            <th>{{$transaction->created_at->format('Y-m-d')}}</th>
+                            <td>&#8358; {{number_format($transaction->amount)}}</td>
+                            <td>{{$transaction->type}}</td>
+                            <td>{{$transaction->info}}</td>
+                            <td>{{$transaction->created_at->format('Y-m-d')}}</td>
                         </tr>
                     @endforeach
                     </tbody>
